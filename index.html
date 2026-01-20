@@ -15,13 +15,23 @@
       position: relative;
     }
 
+    /* Контейнер фиксированный */
+    #container {
+      position: relative;
+      width: 90%;
+      max-width: 600px;
+      height: auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
     img {
-      max-width: 90%;
-      max-height: 90%;
-      z-index: 1;
+      max-width: 100%;
+      max-height: 90vh;
       border-radius: 10px;
       box-shadow: 0 0 40px rgba(255, 180, 100, 0.4); /* теплый свет */
-      position: relative;
+      z-index: 1;
     }
 
     .snowflake {
@@ -44,39 +54,35 @@
   </style>
 </head>
 <body>
-  <img src="Screenshot_20260120_052025_TikTok.jpg" alt="Моя картинка" id="mainImage">
+  <div id="container">
+    <img src="Screenshot_20260120_052025_TikTok.jpg" alt="Моя картинка" id="mainImage">
+  </div>
 
   <script>
-    const body = document.body;
+    const container = document.getElementById('container');
 
     function createSnowflake() {
       const snow = document.createElement('div');
       snow.className = 'snowflake';
       
-      // Случайный размер
       const size = Math.random() * 10 + 8; // 8px - 18px
       snow.style.fontSize = size + 'px';
 
-      // Случайная позиция по ширине
-      snow.style.left = Math.random() * window.innerWidth + 'px';
+      // Позиция внутри контейнера
+      snow.style.left = Math.random() * container.clientWidth + 'px';
 
-      // Случайная скорость падения
-      const duration = Math.random() * 10 + 8; // 8s - 18s
+      const duration = Math.random() * 10 + 8;
       snow.style.animationDuration = duration + 's';
 
       snow.innerText = '❄';
-      body.appendChild(snow);
+      container.appendChild(snow);
 
-      // Удаляем снежинку через время падения, чтобы не нагружать DOM
       setTimeout(() => {
         snow.remove();
       }, duration * 1000);
     }
 
-    // Добавляем снежинки каждые 200ms
     setInterval(createSnowflake, 200);
-
-    // Можно добавлять больше снежинок постепенно (увеличиваем интервал или скорость)
   </script>
 </body>
 </html>
