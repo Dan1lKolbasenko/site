@@ -2,23 +2,55 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Моя страница</title>
+  <title>Ночная страница</title>
   <style>
     body {
       margin: 0;
-      background: #666;
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      overflow: hidden;
+      background: radial-gradient(circle at top right, #222 0%, #001f3f 60%, #000 100%);
+      position: relative;
     }
+
+    /* Падающий снег */
+    .snowflake {
+      position: absolute;
+      top: -10px;
+      color: white;
+      font-size: 8px;
+      user-select: none;
+      pointer-events: none;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(0) translateX(0); opacity: 1; }
+      100% { transform: translateY(110vh) translateX(50px); opacity: 0; }
+    }
+
     img {
       max-width: 90%;
       max-height: 90%;
+      z-index: 1;
+      border-radius: 10px;
+      box-shadow: 0 0 40px rgba(255, 180, 100, 0.4); /* теплый свет фонаря */
     }
   </style>
 </head>
 <body>
-  <img src="Screenshot_20260120_052025_TikTok.jpg">
+  <img src="Screenshot_20260120_052025_TikTok.jpg" alt="Моя картинка">
+
+  <!-- Снежинки -->
+  <div class="snowflake" style="left:5%; animation-duration:10s;">❄</div>
+  <div class="snowflake" style="left:20%; animation-duration:12s;">❄</div>
+  <div class="snowflake" style="left:35%; animation-duration:8s;">❄</div>
+  <div class="snowflake" style="left:50%; animation-duration:14s;">❄</div>
+  <div class="snowflake" style="left:65%; animation-duration:9s;">❄</div>
+  <div class="snowflake" style="left:80%; animation-duration:11s;">❄</div>
+  <div class="snowflake" style="left:90%; animation-duration:13s;">❄</div>
+
 </body>
 </html>
