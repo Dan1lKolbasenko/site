@@ -2,23 +2,32 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Ночная страница со снегом</title>
+  <title>Kolbasenko Aura</title>
   <style>
-    body {
+    html, body {
       margin: 0;
-      height: 100vh;
-      width: 100vw;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    #scene {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
-      overflow: hidden;
       background: radial-gradient(circle at top right, #222 0%, #001f3f 60%, #000 100%);
-      position: relative;
+      overflow: hidden;
     }
 
     img {
       max-width: 90%;
-      max-height: 90vh;
+      max-height: 90%;
       border-radius: 10px;
       box-shadow: 0 0 40px rgba(255, 180, 100, 0.4); /* теплый свет */
       z-index: 1;
@@ -27,7 +36,7 @@
 
     .snowflake {
       position: absolute;
-      top: -20px; /* стартует сверху экрана */
+      top: -20px;
       color: white;
       pointer-events: none;
       user-select: none;
@@ -35,7 +44,7 @@
       font-family: Arial, sans-serif;
       animation-name: fall;
       animation-timing-function: linear;
-      animation-iteration-count: 1; /* один раз вниз */
+      animation-iteration-count: 1;
     }
 
     @keyframes fall {
@@ -45,33 +54,36 @@
   </style>
 </head>
 <body>
-  <img src="Screenshot_20260120_052025_TikTok.jpg" alt="Моя картинка" id="mainImage">
+  <div id="scene">
+    <img src="Screenshot_20260120_052025_TikTok.jpg" alt="Моя картинка">
+  </div>
 
   <script>
+    const scene = document.getElementById('scene');
+
     function createSnowflake() {
       const snow = document.createElement('div');
       snow.className = 'snowflake';
-      
-      const size = Math.random() * 12 + 8; // 8px - 20px
+
+      // Размер снежинки
+      const size = Math.random() * 12 + 8;
       snow.style.fontSize = size + 'px';
 
-      // Случайная позиция по ширине экрана
+      // Позиция по ширине экрана
       snow.style.left = Math.random() * window.innerWidth + 'px';
 
-      // Случайная скорость падения
-      const duration = Math.random() * 10 + 8; // 8s - 18s
+      // Скорость падения
+      const duration = Math.random() * 10 + 8;
       snow.style.animationDuration = duration + 's';
 
       snow.innerText = '❄';
-      document.body.appendChild(snow);
+      scene.appendChild(snow);
 
-      // Удаляем после завершения анимации
       setTimeout(() => {
         snow.remove();
       }, duration * 1000);
     }
 
-    // Создаем снежинки каждые 150мс
     setInterval(createSnowflake, 150);
   </script>
 </body>
