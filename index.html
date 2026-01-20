@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Ночная страница</title>
+  <title>Ночная страница со снегом</title>
   <style>
     body {
       margin: 0;
@@ -15,42 +15,68 @@
       position: relative;
     }
 
-    /* Падающий снег */
-    .snowflake {
-      position: absolute;
-      top: -10px;
-      color: white;
-      font-size: 8px;
-      user-select: none;
-      pointer-events: none;
-      animation: fall linear infinite;
-    }
-
-    @keyframes fall {
-      0% { transform: translateY(0) translateX(0); opacity: 1; }
-      100% { transform: translateY(110vh) translateX(50px); opacity: 0; }
-    }
-
     img {
       max-width: 90%;
       max-height: 90%;
       z-index: 1;
       border-radius: 10px;
-      box-shadow: 0 0 40px rgba(255, 180, 100, 0.4); /* теплый свет фонаря */
+      box-shadow: 0 0 40px rgba(255, 180, 100, 0.4); /* теплый свет */
+      position: relative;
+    }
+
+    .snowflake {
+      position: absolute;
+      top: -10px;
+      color: white;
+      pointer-events: none;
+      user-select: none;
+      opacity: 0.6;
+      font-family: Arial, sans-serif;
+      animation-name: fall;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(0) translateX(0); opacity: 0.6; }
+      100% { transform: translateY(110vh) translateX(50px); opacity: 0.3; }
     }
   </style>
 </head>
 <body>
-  <img src="Screenshot_20260120_052025_TikTok.jpg" alt="Моя картинка">
+  <img src="Screenshot_20260120_052025_TikTok.jpg" alt="Моя картинка" id="mainImage">
 
-  <!-- Снежинки -->
-  <div class="snowflake" style="left:5%; animation-duration:10s;">❄</div>
-  <div class="snowflake" style="left:20%; animation-duration:12s;">❄</div>
-  <div class="snowflake" style="left:35%; animation-duration:8s;">❄</div>
-  <div class="snowflake" style="left:50%; animation-duration:14s;">❄</div>
-  <div class="snowflake" style="left:65%; animation-duration:9s;">❄</div>
-  <div class="snowflake" style="left:80%; animation-duration:11s;">❄</div>
-  <div class="snowflake" style="left:90%; animation-duration:13s;">❄</div>
+  <script>
+    const body = document.body;
 
+    function createSnowflake() {
+      const snow = document.createElement('div');
+      snow.className = 'snowflake';
+      
+      // Случайный размер
+      const size = Math.random() * 10 + 8; // 8px - 18px
+      snow.style.fontSize = size + 'px';
+
+      // Случайная позиция по ширине
+      snow.style.left = Math.random() * window.innerWidth + 'px';
+
+      // Случайная скорость падения
+      const duration = Math.random() * 10 + 8; // 8s - 18s
+      snow.style.animationDuration = duration + 's';
+
+      snow.innerText = '❄';
+      body.appendChild(snow);
+
+      // Удаляем снежинку через время падения, чтобы не нагружать DOM
+      setTimeout(() => {
+        snow.remove();
+      }, duration * 1000);
+    }
+
+    // Добавляем снежинки каждые 200ms
+    setInterval(createSnowflake, 200);
+
+    // Можно добавлять больше снежинок постепенно (увеличиваем интервал или скорость)
+  </script>
 </body>
 </html>
