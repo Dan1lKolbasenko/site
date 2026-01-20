@@ -7,6 +7,7 @@
     body {
       margin: 0;
       height: 100vh;
+      width: 100vw;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -15,28 +16,18 @@
       position: relative;
     }
 
-    /* Контейнер фиксированный */
-    #container {
-      position: relative;
-      width: 90%;
-      max-width: 600px;
-      height: auto;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
     img {
-      max-width: 100%;
+      max-width: 90%;
       max-height: 90vh;
       border-radius: 10px;
       box-shadow: 0 0 40px rgba(255, 180, 100, 0.4); /* теплый свет */
       z-index: 1;
+      position: relative;
     }
 
     .snowflake {
       position: absolute;
-      top: -10px;
+      top: -20px; /* стартует сверху экрана */
       color: white;
       pointer-events: none;
       user-select: none;
@@ -44,45 +35,44 @@
       font-family: Arial, sans-serif;
       animation-name: fall;
       animation-timing-function: linear;
-      animation-iteration-count: infinite;
+      animation-iteration-count: 1; /* один раз вниз */
     }
 
     @keyframes fall {
       0% { transform: translateY(0) translateX(0); opacity: 0.6; }
-      100% { transform: translateY(110vh) translateX(50px); opacity: 0.3; }
+      100% { transform: translateY(100vh) translateX(50px); opacity: 0.3; }
     }
   </style>
 </head>
 <body>
-  <div id="container">
-    <img src="Screenshot_20260120_052025_TikTok.jpg" alt="Моя картинка" id="mainImage">
-  </div>
+  <img src="Screenshot_20260120_052025_TikTok.jpg" alt="Моя картинка" id="mainImage">
 
   <script>
-    const container = document.getElementById('container');
-
     function createSnowflake() {
       const snow = document.createElement('div');
       snow.className = 'snowflake';
       
-      const size = Math.random() * 10 + 8; // 8px - 18px
+      const size = Math.random() * 12 + 8; // 8px - 20px
       snow.style.fontSize = size + 'px';
 
-      // Позиция внутри контейнера
-      snow.style.left = Math.random() * container.clientWidth + 'px';
+      // Случайная позиция по ширине экрана
+      snow.style.left = Math.random() * window.innerWidth + 'px';
 
-      const duration = Math.random() * 10 + 8;
+      // Случайная скорость падения
+      const duration = Math.random() * 10 + 8; // 8s - 18s
       snow.style.animationDuration = duration + 's';
 
       snow.innerText = '❄';
-      container.appendChild(snow);
+      document.body.appendChild(snow);
 
+      // Удаляем после завершения анимации
       setTimeout(() => {
         snow.remove();
       }, duration * 1000);
     }
 
-    setInterval(createSnowflake, 200);
+    // Создаем снежинки каждые 150мс
+    setInterval(createSnowflake, 150);
   </script>
 </body>
 </html>
